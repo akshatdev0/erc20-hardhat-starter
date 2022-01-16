@@ -1,11 +1,11 @@
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
+import "hardhat-deploy";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 
 import "./tasks/accounts";
 import "./tasks/clean";
-import "./tasks/deployers";
 
 import { resolve } from "path";
 
@@ -117,6 +117,8 @@ const config: HardhatUserConfig = {
     cache: "./cache",
     sources: "./contracts",
     tests: "./test",
+    deploy: "./scripts/deploy",
+    deployments: "./deployments",
   },
   solidity: {
     version: "0.8.0",
@@ -135,9 +137,17 @@ const config: HardhatUserConfig = {
       },
     },
   },
+  namedAccounts: {
+    deployer: {
+      default: 0,
+    },
+  },
   typechain: {
     outDir: "types",
     target: "ethers-v5",
+  },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY,
   },
 };
 
